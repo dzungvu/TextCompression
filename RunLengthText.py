@@ -38,6 +38,10 @@ def encode(pathData):
 		pickle.dump(lst, fp)
 
 	fileRead.close()
+
+	sizeBefore = os.path.getsize(pathData)
+	sizeAfter = os.path.getsize(pathCompress)
+	print ('Ratio of file ' + fileName[0] + ' using Runlength coding = ' + str(float(sizeBefore/sizeAfter)))
  
 def decode(pathCompress):
 
@@ -72,8 +76,8 @@ def decodeMultiFile(pathFolder):
 		if file.endswith(".pkl"):
 			decode(os.path.join(pathFolder, file))
 
-pathFolder = 'data'
+pathFolder = 'text_data'
 encodeMultiFile(pathFolder)
 
-# pathFolder = 'decompressedFolder'
+# pathFolder = 'RunlengthCompressed'
 # decodeMultiFile(pathFolder)

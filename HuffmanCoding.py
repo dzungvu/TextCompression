@@ -80,6 +80,10 @@ def encode(pathFile):
     with open(pathDictionary, "wb") as fp:
         pickle.dump(dic, fp)
 
+    sizeBefore = len(input_string) * 7
+    sizeAfter = len(compressed)
+
+    print ('Ratio of file ' + fileName[0] + ' using huffman = ' + str(float(sizeBefore/sizeAfter)))
 '''
 Using dictionary, decode file using huffman
 '''
@@ -122,12 +126,12 @@ def decodeMultiFile(dictionaryFolder, pathFolder):
             filename = filePiece[0] + '.pkl'
             decode(os.path.join(dictionaryFolder, filename), os.path.join(pathFolder, file))
 
-# pathFolder = 'data'
-# encodeMultiFile(pathFolder)
+pathFolder = 'text_data'
+encodeMultiFile(pathFolder)
 
-pathFolder = 'HufmanCompressed'
-pathDictionary = 'HuffmanDictionary'
-decodeMultiFile(pathDictionary, pathFolder)
+# pathFolder = 'HufmanCompressed'
+# pathDictionary = 'HuffmanDictionary'
+# decodeMultiFile(pathDictionary, pathFolder)
 
 
 
