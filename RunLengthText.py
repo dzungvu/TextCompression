@@ -8,7 +8,8 @@ compressedFolder = 'RunlengthCompressed\\'
 #This folder is created automaticly to contain decompressed data
 decompressedFolder = 'RunlengthDecompressed\\'
 
-ratios = []
+realityRatios = []
+theoryRatios = []
 
 '''
 @param pathData path of file want to compress
@@ -34,7 +35,7 @@ def encode(pathData):
 	else:
 		entry = (character,count)
 		lst.append(entry)
-	
+
 	pathSplit = str(fileRead.name).split('\\')
 	fileName = pathSplit[len(pathSplit) - 1].split('.')
 
@@ -51,8 +52,15 @@ def encode(pathData):
 	sizeAfter = os.path.getsize(pathCompress)
 	ratio = float(sizeBefore/sizeAfter)
 
-	ratios.append(ratio) 
+	realityRatios.append(ratio) 
 	print ('Ratio of file ' + fileName[0] + ' using Runlength coding = ' + str(ratio))
+
+	theory = ''
+	for item in lst:
+		theory += (item[0] + str(item[1]))
+
+	ratio = float(len(input_string) / (len(theory)))
+	theoryRatios.append(ratio)
  
 '''
 @param pathCompress path of compressed file need to decompress
@@ -79,6 +87,8 @@ def decode(pathCompress):
 	fileDecompressed.close()
 
 
+
+
 '''
 @param pathFolder folder contain .txt files need to endcode
 '''
@@ -99,15 +109,22 @@ def decodeMultiFile(pathFolder):
 #call method endcode
 pathFolder = 'text_data'
 encodeMultiFile(pathFolder)
-averageRatio = 0
-for ratio in ratios:
-	averageRatio += ratio
+averageRealityRatio = 0
+averageTheoryRatio = 0
+for ratio in realityRatios:
+	averageRealityRatio += ratio
 
-averageRatio = float(averageRatio / len(ratios))
+for ratio in theoryRatios:
+	averageTheoryRatio += ratio
+
+averageRealityRatio = float(averageRealityRatio / len(realityRatios))
+averageTheoryRatio = float (averageTheoryRatio / len(theoryRatios))
 with open('RunlengthRecord.txt', 'w') as f:
-    f.write('Runlength reality average ratio: ' + str(averageRatio))
+	f.write('Runlength theory average ratio: ' + str(averageTheoryRatio) + '\n')
+	f.write('Runlength reality average ratio: ' + str(averageRealityRatio))
 
 f.close()
+
 
 ##Call method decode
 # pathFolder = 'RunlengthCompressed'

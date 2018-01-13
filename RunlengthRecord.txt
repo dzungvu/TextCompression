@@ -1,1 +1,2 @@
+Runlength theory average ratio: 0.5354014987448212
 Runlength reality average ratio: 0.10840471259392237
