@@ -2,9 +2,15 @@ import pickle
 import os
 import glob
 
+#This folder is created automaticly to contain compressed data
 compressedFolder = 'RunlengthCompressed\\'
+
+#This folder is created automaticly to contain decompressed data
 decompressedFolder = 'RunlengthDecompressed\\'
 
+'''
+@param pathData path of file want to compress
+'''
 def encode(pathData):
 
 	fileRead = open(pathData, 'r')
@@ -43,6 +49,9 @@ def encode(pathData):
 	sizeAfter = os.path.getsize(pathCompress)
 	print ('Ratio of file ' + fileName[0] + ' using Runlength coding = ' + str(float(sizeBefore/sizeAfter)))
  
+'''
+@param pathCompress path of compressed file need to decompress
+'''
 def decode(pathCompress):
 
 	lst = []
@@ -65,19 +74,27 @@ def decode(pathCompress):
 	fileDecompressed.close()
 
 
+'''
+@param pathFolder folder contain .txt files need to endcode
+'''
 def encodeMultiFile(pathFolder):
 	for file in os.listdir(pathFolder):
 		if file.endswith(".txt"):
 			encode(os.path.join(pathFolder, file))
 
 
+'''
+@param pathFolder folder contain .pkl file need to decode
+'''
 def decodeMultiFile(pathFolder):
 	for file in os.listdir(pathFolder):
 		if file.endswith(".pkl"):
 			decode(os.path.join(pathFolder, file))
 
+#call method endcode
 pathFolder = 'text_data'
 encodeMultiFile(pathFolder)
 
+##Call method decode
 # pathFolder = 'RunlengthCompressed'
 # decodeMultiFile(pathFolder)

@@ -3,12 +3,16 @@ from collections import defaultdict
 import pickle
 import os
 
-compressedFolder = 'HufmanCompressed\\'
+#This folder is created automaticly to contain compressed data
+compressedFolder = 'HuffmanCompressed\\'
+#This folder is created automaticly to contain decompressed data
 decompressedFolder = 'HuffmanDecompressed\\'
+#This folder is created automaticly to contain dictionary data
 dictionaryFolder = 'HuffmanDictionary\\'
 
 '''
 Calculate frequent for each charater in data input
+@param data calculate frequent of each character in this string
 '''
 def frequent(data):
     frequency = defaultdict(int)
@@ -19,6 +23,7 @@ def frequent(data):
 
 '''
 Encode characters to binary numbers
+@param data each character in this string will be encoded into binary form
 '''
 def huffmanEncodeCharacter(data):
 
@@ -39,6 +44,7 @@ def huffmanEncodeCharacter(data):
 
 '''
 From characters and binary strings of each characters, create dictionary
+@param huff
 '''
 def createDictionary(huff):
     dic = {}
@@ -49,6 +55,7 @@ def createDictionary(huff):
 
 '''
 Encode string in file using huffman
+@param pathFile path of file need to be encoded
 '''
 def encode(pathFile):
     compressed = ''
@@ -86,6 +93,8 @@ def encode(pathFile):
     print ('Ratio of file ' + fileName[0] + ' using huffman = ' + str(float(sizeBefore/sizeAfter)))
 '''
 Using dictionary, decode file using huffman
+@param dictionaryPath path of dictionary file
+@param pathFile path of file need to be decoded
 '''
 def decode (dictionaryPath, pathFile):
 
@@ -113,12 +122,17 @@ def decode (dictionaryPath, pathFile):
     fileDecompressed.close()
     return res
 
+'''
+@param pathFolder folder contain .txt files need to endcode
+'''
 def encodeMultiFile(pathFolder):
 	for file in os.listdir(pathFolder):
 		if file.endswith(".txt"):
 			encode(os.path.join(pathFolder, file))
 
-
+'''
+@param pathFolder folder contain .bin file need to decode
+'''
 def decodeMultiFile(dictionaryFolder, pathFolder):
     for file in os.listdir(pathFolder):
         if file.endswith(".bin"):
