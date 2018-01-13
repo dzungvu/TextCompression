@@ -1,0 +1,2 @@
+Huffman theory average ratio: 1.974497897924373
+Huffman reality average ratio: 0.28207112827491043

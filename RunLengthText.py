@@ -8,6 +8,8 @@ compressedFolder = 'RunlengthCompressed\\'
 #This folder is created automaticly to contain decompressed data
 decompressedFolder = 'RunlengthDecompressed\\'
 
+ratios = []
+
 '''
 @param pathData path of file want to compress
 '''
@@ -47,7 +49,10 @@ def encode(pathData):
 
 	sizeBefore = os.path.getsize(pathData)
 	sizeAfter = os.path.getsize(pathCompress)
-	print ('Ratio of file ' + fileName[0] + ' using Runlength coding = ' + str(float(sizeBefore/sizeAfter)))
+	ratio = float(sizeBefore/sizeAfter)
+
+	ratios.append(ratio) 
+	print ('Ratio of file ' + fileName[0] + ' using Runlength coding = ' + str(ratio))
  
 '''
 @param pathCompress path of compressed file need to decompress
@@ -94,6 +99,15 @@ def decodeMultiFile(pathFolder):
 #call method endcode
 pathFolder = 'text_data'
 encodeMultiFile(pathFolder)
+averageRatio = 0
+for ratio in ratios:
+	averageRatio += ratio
+
+averageRatio = float(averageRatio / len(ratios))
+with open('RunlengthRecord.txt', 'w') as f:
+    f.write('Runlength reality average ratio: ' + str(averageRatio))
+
+f.close()
 
 ##Call method decode
 # pathFolder = 'RunlengthCompressed'

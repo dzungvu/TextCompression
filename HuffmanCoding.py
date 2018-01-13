@@ -10,6 +10,9 @@ decompressedFolder = 'HuffmanDecompressed\\'
 #This folder is created automaticly to contain dictionary data
 dictionaryFolder = 'HuffmanDictionary\\'
 
+realityRatios = []
+theoryRatios = []
+
 '''
 Calculate frequent for each charater in data input
 @param data calculate frequent of each character in this string
@@ -89,8 +92,15 @@ def encode(pathFile):
 
     sizeBefore = len(input_string) * 7
     sizeAfter = len(compressed)
+    ratio = float(sizeBefore/sizeAfter)
+    theoryRatios.append(ratio)
 
-    print ('Ratio of file ' + fileName[0] + ' using huffman = ' + str(float(sizeBefore/sizeAfter)))
+    sizeBefore = os.path.getsize(pathFile)
+    sizeAfter = os.path.getsize(pathCompress)
+    ratio = float(sizeBefore/sizeAfter)
+    realityRatios.append(ratio)
+
+    print ('Ratio of file ' + fileName[0] + ' using huffman = ' + str(ratio))
 '''
 Using dictionary, decode file using huffman
 @param dictionaryPath path of dictionary file
@@ -142,6 +152,23 @@ def decodeMultiFile(dictionaryFolder, pathFolder):
 
 pathFolder = 'text_data'
 encodeMultiFile(pathFolder)
+averageRatioReality = 0
+averageRatioTheory = 0
+for ratio in realityRatios:
+    averageRatioReality += ratio
+
+for ratio in theoryRatios:
+    averageRatioTheory += ratio
+
+averageRatioReality = float(averageRatioReality / len(realityRatios))
+averageRatioTheory = float(averageRatioTheory / len(theoryRatios))
+
+with open('HuffmanRecord.txt', 'w') as f:
+    f.write('Huffman theory average ratio: ' + str(averageRatioTheory) + '\n')
+    f.write('Huffman reality average ratio: ' + str(averageRatioReality))
+
+f.close()
+
 
 # pathFolder = 'HufmanCompressed'
 # pathDictionary = 'HuffmanDictionary'
