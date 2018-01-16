@@ -57,7 +57,10 @@ def encode(pathData):
 
 	theory = ''
 	for item in lst:
-		theory += (item[0] + str(item[1]))
+		if (item[1] > 1):
+			theory += (item[0] + str(item[1]))
+		else:
+			theory += str(item[1])
 
 	ratio = float(len(input_string) / (len(theory)))
 	theoryRatios.append(ratio)
